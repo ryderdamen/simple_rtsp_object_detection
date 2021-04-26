@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-rtsp-object-detector
+  labels:
+    app: simple-rtsp-object-detector
+spec:
+  selector:
+    matchLabels:
+      app: simple-rtsp-object-detector
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: simple-rtsp-object-detector
+    spec:
+      containers:
+      - name: simple-rtsp-object-detector
+        image: ryderdamen/simple-rtsp-object-detector:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: STREAM_URI
+          valueFrom:
+            secretKeyRef:
+              name: simple-rtsp-object-detector
+              key: stream_uri
+        - name: FPS_LIMIT
+          value: "5"
+        - name: DISPLAY_FPS
+          value: "10"
+        - name: CONFIDENCE_THRESHOLD
+          value: "0.3"

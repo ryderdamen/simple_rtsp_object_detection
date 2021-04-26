@@ -1,0 +1,5 @@
+settings.env
+*.pyc
+**/*.weights
+**/.DS_Store
+**/secrets.yaml
